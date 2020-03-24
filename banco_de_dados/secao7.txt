@@ -1,0 +1,31 @@
+BANCO DE DADOS:
+
+HIERARQUIA:
+    - Schema (Base de Dados)
+        - Tabelas
+            -Registros
+                - Campos
+
+
+TIPOS DE DADOS:
+
+Inteiros:
+- tinyint, smallint, mediumint, int, bigint -> geralmente usado o int.
+Decimais:
+- decimal (número fixo de casaas decimais), float e double (número não fixo de casa decimais) -> geralmente usado o decimal.
+Texto:
+- char (string de tamanho fixo e não binária), varchar (string tamanho variável e não binária) e text (string não binária e pequena).
+Data:
+- date (yyyy-mm-dd), time (hh:mm:ss) e datetime (yyyy-mm-dd hh:mm:ss).
+
+CARDINALIDADE:
+
+Relação de quantos pra quantos, entre tabelas.
+    - Quando temos uma cardinalidade de N para N, temos que inserir uma tabela intermediária para fazer a Relação
+    entre os dois, onde teremos uma Primary Key (default de todas as tabelas) e uma Foreign Key (relacionando outra tabela).
+    
+
+CONEXÃO PYTHON SQL:
+
+pip install mysqlclient -> terminal
+

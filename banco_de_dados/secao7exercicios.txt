@@ -1,0 +1,133 @@
+
+PARA CRIAR TABELAS: -----------------------------------------------------------
+
+CREATE TABLE escola_curso.alunos(
+    id_aluno INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id_aluno)
+);
+
+CREATE TABLE escola_curso.cursos(
+    id_curso INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id_curso)
+);
+
+CREATE TABLE escola_curso.notas(
+    id_nota INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id_nota)
+);
+
+
+PARA ALTERAR TABELAS - INSERIR COLUNAS NELAS: -----------------------------------------------------------
+
+ALTER TABLE alunos
+ADD COLUMN nome VARCHAR(100) NOT NULL AFTER id_aluno,
+ADD COLUMN data_nascimento DATE NOT NULL AFTER nome,
+ADD COLUMN endereco VARCHAR(255) NOT NULL AFTER data_nascimento,
+ADD COLUMN cidade VARCHAR(100) NOT NULL AFTER endereco,
+ADD COLUMN estado VARCHAR(2) NOT NULL AFTER cidade,
+ADD COLUMN cpf VARCHAR(11) NOT NULL AFTER estado;
+
+
+ALTER TABLE cursos
+ADD COLUMN nome VARCHAR(100) NOT NULL AFTER id_curso;
+
+
+ALTER TABLE notas
+ADD COLUMN descricao_atividade VARCHAR(100) NOT NULL AFTER id_nota,
+ADD COLUMN nota DECIMAL(5, 2) NOT NULL AFTER descricao_atividade;
+                # decimal com 5 digitos, 2 deles após a vírgula
+
+
+PARA APAGAR TABELAS: -----------------------------------------------------------
+
+DROP TABLE alunos;
+DROP TABLE cursos;
+DROP TABLE notas;
+
+
+PARA INSERIR VALORES NAS TABELAS - CRIAR OBJETOS: -----------------------------------------------------------
+
+INSERT INTO table_name (column1, column2, column3...)
+VALUES (value1, value2, value3...);
+
+
+#como eu quero inserir todos os campos, não preciso botar quais campos quero inserir
+INSERT INTO alunos
+VALUES (DEFAULT, 'Bruna Azambuja', '2000-07-01', 'SMPW qd 09 conj 3 lote 2 casa D', 'Brasilia', 'DF', '07437715163');
+
+
+PARA ALTERAR UM DADO: -----------------------------------------------------------
+
+UPDATE table_name
+SET column1 = value1, column2 = value2...
+WHERE condition;
+
+UPDATE alunos
+SET nome = 'Pedro Magalhaes'
+WHERE id_aluno = 1;
+
+
+
+PARA DELETAR UM DADO: -----------------------------------------------------------
+
+DELETE FROM table_name
+WHERE condition;
+
+DELETE FROM alunos
+WHERE id_aluno = 20;
+
+
+PARA CONSULTAR UMA TABELA: -----------------------------------------------------------
+
+#para selecionar todos os dados usamos *
+SELECT *
+FROM table_name
+WHERE condition
+ORDER BY atributo;
+
+SELECT nome, idade, cpf
+FROM alunos
+WHERE cidade = 'Rio de Janeiro'
+ORDER BY nome DESC;
+    # na ordem inversa (descendente)
+
+
+
+PARA USAR OPERADORES: -----------------------------------------------------------
+
+SELECT *
+FROM table_name
+WHERE condition1 OR condition2 AND condition3;
+
+
+
+PARA USAR OPERADORES: -----------------------------------------------------------
+
+#tabela que cria a relação de N para N entre tabelas alunos e cursos. 
+ALTER TABLE alunos_cursos
+ADD INDEX fk_id_aluno_idx (id_aluno ASC) VISIBLE,
+ADD INDEX fk_id_curso_idx (id_curso ASC) VISIBLE;
+
+ALTER TABLE alunos_crusos
+ADD CONSTRAINT fk_id_aluno
+    FOREIGN KEY (id_aluno)
+    REFERENCES alunos (id_aluno)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+ADD CONSTRAINT fk_id_curso
+    FOREIGN KEY (id_curso)
+    REFERENCES curso (id_curso)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+
+
+PARA FAZER JOINS: -----------------------------------------------------------
+
+SELECT a.id_aluno, a.nome, c.id_curso, c.nome, n.descricao_atividade, n.nota,
+FROM alunos a,
+    cursos c,
+    alunos_cursos ac,
+    notas n
+WHERE a.id_aluno = ac.id_aluno AND c.id_curso = ac.id_curso AND ac.id_alunos_cursos = n.id_aluno_curso
+ORDER BY a.nome
+
